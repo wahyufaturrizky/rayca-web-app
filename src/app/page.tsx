@@ -1,101 +1,215 @@
 "use client";
 
+import Text from "@/components/Text";
+import { ConfigProvider, Table, TableProps } from "antd";
+import { DashboardTableDataType, TablePaginationConfig } from "@/interface/dashboard.interface";
+import ImageNext from "@/components/Image";
+import { Key, useCallback, useEffect, useState } from "react";
+import { FilterValue } from "antd/es/table/interface";
+import { actionButton, mockDataTable } from "./mock.data";
+import Input from "@/components/Input";
+
 export default function Home() {
+  const [dataTable, setDataTable] = useState<DashboardTableDataType[]>([]);
+
+  const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
+
+  const [tableParams, setTableParams] = useState<{
+    pagination: TablePaginationConfig;
+  }>({
+    pagination: {
+      current: 1,
+      pageSize: 10,
+      showSizeChanger: true,
+    },
+  });
+
+  const handleTableChange = (
+    pagination: TablePaginationConfig,
+    filters: Record<string, FilterValue | null>,
+    sorter: any
+  ) => {
+    setTableParams({
+      pagination,
+      filters,
+      ...sorter,
+    });
+
+    // `dataSource` is useless since `pageSize` changed
+    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+      setDataTable([]);
+    }
+  };
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: (selectedRowKeys: Key[]) => {
+      setSelectedRowKeys(selectedRowKeys);
+    },
+  };
+
+  const fetchData = useCallback(() => {
+    setDataTable(
+      mockDataTable.map((item: DashboardTableDataType, index: number) => ({
+        ...item,
+        key: index,
+        id: index,
+      }))
+    );
+
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        total: mockDataTable.length,
+      },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(tableParams)]);
+
+  const columns: TableProps<DashboardTableDataType>["columns"] = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      sorter: (a, b) => a.name.length - b.name.length,
+      key: "name",
+      render: (text: string) => {
+        return (
+          <div className="flex items-center gap-2">
+            <ImageNext
+              src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/2sHnk28/Screenshot-2024-03-03-at-20-13-00.png`}
+              width={32}
+              height={32}
+              priority
+              alt="icon"
+              className="h-auto w-auto"
+            />
+
+            <div>
+              <Text label={text} className="text-base font-normal text-gray-400" />
+              <Text label={text} className="text-xs font-normal text-gray-400" />
+            </div>
+          </div>
+        );
+      },
+    },
+    {
+      title: "Size",
+      dataIndex: "size",
+      sorter: (a, b) => a.size - b.size,
+      key: "size",
+      render: (text: string) => {
+        return <Text label={`${text} KB`} className="text-base font-normal text-gray-400" />;
+      },
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      sorter: (a, b) => a.status.length - b.status.length,
+      key: "status",
+      render: (text: string) => {
+        return <Text label={text} className="text-base font-normal text-gray-400" />;
+      },
+    },
+    {
+      title: "Status",
+      dataIndex: "timeLeft",
+      sorter: (a, b) => a.timeLeft - b.timeLeft,
+      key: "timeLeft",
+      render: (text: string) => {
+        return <Text label={`${text} Sec`} className="text-base font-normal text-gray-400" />;
+      },
+    },
+    {
+      title: "Last Modification",
+      dataIndex: "lastModification",
+      sorter: (a, b) => a.lastModification.length - b.lastModification.length,
+      key: "lastModification",
+      render: (text: string) => {
+        return <Text label={text} className="text-base font-normal text-gray-400" />;
+      },
+    },
+  ];
+
   return (
-    <main className="py-6 px-4 sm:p-6 md:py-10 md:px-8">
-      <div className="max-w-4xl mx-auto grid grid-cols-1 lg:max-w-5xl lg:gap-x-20 lg:grid-cols-2">
-        <div className="relative p-3 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-black/75 via-black/0 sm:bg-none sm:row-start-2 sm:p-0 lg:row-start-1">
-          <h1 className="mt-1 text-lg font-semibold text-white sm:text-slate-900 md:text-2xl dark:sm:text-white">
-            Beach House in Collingwood
-          </h1>
-          <p className="text-sm leading-4 font-medium text-white sm:text-slate-500 dark:sm:text-slate-400">
-            Entire house
-          </p>
-        </div>
-        <div className="grid gap-4 col-start-1 col-end-3 row-start-1 sm:mb-6 sm:grid-cols-4 lg:gap-6 lg:col-start-2 lg:row-end-6 lg:row-span-6 lg:mb-0">
-          <img
-            src="/beach-house.jpg"
-            alt=""
-            className="w-full h-60 object-cover rounded-lg sm:h-52 sm:col-span-2 lg:col-span-full"
-            loading="lazy"
-          />
-          <img
-            src="/beach-house-interior-1.jpg"
-            alt=""
-            className="hidden w-full h-52 object-cover rounded-lg sm:block sm:col-span-2 md:col-span-1 lg:row-start-2 lg:col-span-2 lg:h-32"
-            loading="lazy"
-          />
-          <img
-            src="/beach-house-interior-2.jpg"
-            alt=""
-            className="hidden w-full h-52 object-cover rounded-lg md:block lg:row-start-2 lg:col-span-2 lg:h-32"
-            loading="lazy"
-          />
-        </div>
-        <dl className="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-2.5 lg:row-start-2">
-          <dt className="sr-only">Reviews</dt>
-          <dd className="text-indigo-600 flex items-center dark:text-indigo-400">
-            <svg
-              width="24"
-              height="24"
-              fill="none"
-              aria-hidden="true"
-              className="mr-1 stroke-current dark:stroke-indigo-500"
-            >
-              <path
-                d="m12 5 2 5h5l-4 4 2.103 5L12 16l-5.103 3L9 14l-4-4h5l2-5Z"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+    <div className="bg-primary-dark">
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: "#16161EA6",
+            colorText: "rgb(156 163 175)",
+            colorBgContainer: "#16161E",
+          },
+          components: {
+            Table: {
+              rowHoverBg: "black",
+            },
+            Pagination: {
+              itemActiveBg: "white",
+              itemInputBg: "white",
+              itemLinkBg: "white",
+              itemBg: "white",
+              itemActiveBgDisabled: "white",
+              itemActiveColorDisabled: "white",
+            },
+          },
+        }}
+      >
+        <div className="flex items-center p-6 lg:justify-between gap-10 overflow-x-scroll flex-nowrap">
+          <Input
+            name="search"
+            type="text"
+            required
+            placeholder="Add url"
+            prefixIcon={
+              <ImageNext
+                src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/G2nTYKs/Screenshot-2024-03-04-at-01-36-02.png`}
+                width={32}
+                height={32}
+                priority
+                alt="icon"
+                className="h-auto w-auto"
               />
-            </svg>
-            <span>
-              4.89 <span className="text-slate-400 font-normal">(128)</span>
-            </span>
-          </dd>
-          <dt className="sr-only">Location</dt>
-          <dd className="flex items-center">
-            <svg
-              width="2"
-              height="2"
-              aria-hidden="true"
-              fill="currentColor"
-              className="mx-3 text-slate-300"
-            >
-              <circle cx="1" cy="1" r="1" />
-            </svg>
-            <svg
-              width="24"
-              height="24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              className="mr-1 text-slate-400 dark:text-slate-500"
-              aria-hidden="true"
-            >
-              <path d="M18 11.034C18 14.897 12 19 12 19s-6-4.103-6-7.966C6 7.655 8.819 5 12 5s6 2.655 6 6.034Z" />
-              <path d="M14 11a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" />
-            </svg>
-            Collingwood, Ontario
-          </dd>
-        </dl>
-        <div className="mt-4 col-start-1 row-start-3 self-center sm:mt-0 sm:col-start-2 sm:row-start-2 sm:row-span-2 lg:mt-6 lg:col-start-1 lg:row-start-3 lg:row-end-4">
-          <button
-            type="button"
-            className="bg-indigo-600 text-white text-sm leading-6 font-medium py-2 px-3 rounded-lg"
-          >
-            Check availability
-          </button>
+            }
+            classNameInput="rounded-xl bg-[#22222A] border-0 p-3 ps-12 text-white shadow-sm ring-1 ring-inset ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-blue sm:text-sm"
+          />
+
+          {actionButton.map((item) => (
+            <div key={item.label} className="flex flex-col items-center gap-2">
+              <ImageNext
+                src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}${item.img}`}
+                width={32}
+                height={32}
+                priority
+                alt="icon"
+                className="h-[32px] w-[32px]"
+              />
+
+              <Text label={item.label} className="text-white text-gray-400 text-center" />
+            </div>
+          ))}
         </div>
-        <p className="mt-4 text-sm leading-6 col-start-1 sm:col-span-2 lg:mt-6 lg:row-start-4 lg:col-span-1 dark:text-slate-400">
-          This sunny and spacious room is for those traveling light and looking for a comfy and cosy
-          place to lay their head for a night or two. This beach house sits in a vibrant
-          neighborhood littered with cafes, pubs, restaurants and supermarkets and is close to all
-          the major attractions such as Edinburgh Castle and Arthur's Seat.
-        </p>
-      </div>
-    </main>
+        <Table
+          columns={columns}
+          dataSource={dataTable}
+          scroll={{ x: 1400 }}
+          pagination={tableParams.pagination}
+          onChange={handleTableChange}
+          rowSelection={rowSelection}
+          rowKey={(record) => record.id}
+        />
+      </ConfigProvider>
+    </div>
   );
 }

@@ -5,6 +5,7 @@ import type { MenuProps } from "antd";
 import { ConfigProvider, Grid, Layout as LayoutAntd, Menu } from "antd";
 import { useState } from "react";
 import ImageNext from "./Image";
+import Input from "./Input";
 import Text from "./Text";
 
 // Author, Software Architect, Software Engineer, Software Developer : https://www.linkedin.com/in/wahyu-fatur-rizky
@@ -41,7 +42,7 @@ const Layout = ({ ...props }: LayoutInterface) => {
         {
           icon: (
             <ImageNext
-              src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/2sHnk28/Screenshot-2024-03-03-at-20-13-00.png`}
+              src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/6ZhGXdV/Screenshot-2024-03-03-at-23-56-43.png`}
               width={32}
               height={32}
               priority
@@ -49,8 +50,106 @@ const Layout = ({ ...props }: LayoutInterface) => {
               className="h-auto w-auto"
             />
           ),
-          label: "asd",
-          key: "to-review",
+          label: "Musics",
+          key: "musics",
+        },
+        {
+          icon: (
+            <ImageNext
+              src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/rM6Tqsz/Screenshot-2024-03-03-at-23-58-50.png`}
+              width={32}
+              height={32}
+              priority
+              alt="icon"
+              className="h-auto w-auto"
+            />
+          ),
+          label: "Compressed",
+          key: "compressed",
+        },
+        {
+          icon: (
+            <ImageNext
+              src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/DwyQMWL/Screenshot-2024-03-04-at-00-00-51.png`}
+              width={32}
+              height={32}
+              priority
+              alt="icon"
+              className="h-auto w-auto"
+            />
+          ),
+          label: "Videos",
+          key: "videos",
+        },
+        {
+          icon: (
+            <ImageNext
+              src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/bQXNWP9/Screenshot-2024-03-04-at-00-02-21.png`}
+              width={32}
+              height={32}
+              priority
+              alt="icon"
+              className="h-auto w-auto"
+            />
+          ),
+          label: "Programs",
+          key: "programs",
+        },
+        {
+          icon: (
+            <ImageNext
+              src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/Xy1Xwsb/Screenshot-2024-03-04-at-00-04-09.png`}
+              width={32}
+              height={32}
+              priority
+              alt="icon"
+              className="h-auto w-auto"
+            />
+          ),
+          label: "Documents",
+          key: "documents",
+        },
+        {
+          icon: (
+            <ImageNext
+              src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/QQ1X4jn/Screenshot-2024-03-04-at-00-05-45.png`}
+              width={32}
+              height={32}
+              priority
+              alt="icon"
+              className="h-auto w-auto"
+            />
+          ),
+          label: "APKs",
+          key: "apks",
+        },
+        {
+          icon: (
+            <ImageNext
+              src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/QQ1X4jn/Screenshot-2024-03-04-at-00-05-45.png`}
+              width={32}
+              height={32}
+              priority
+              alt="icon"
+              className="h-auto w-auto"
+            />
+          ),
+          label: "APKs",
+          key: "apks",
+        },
+        {
+          icon: (
+            <ImageNext
+              src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/jy9g8Yh/Screenshot-2024-03-04-at-00-06-40.png`}
+              width={32}
+              height={32}
+              priority
+              alt="icon"
+              className="h-auto w-auto"
+            />
+          ),
+          label: "Images",
+          key: "images",
         },
       ],
     },
@@ -90,14 +189,14 @@ const Layout = ({ ...props }: LayoutInterface) => {
     return {
       key: String(index + 1),
       icon: <div className="h-6 w-6">{icon}</div>,
-      label: <Text label={label} />,
+      label: <Text label={label} className="text-gray-400" />,
       children: children?.map((child, indexChild) => {
         const { icon, label: subLabel } = child;
 
         return {
           key: String(index + 1) + "-" + String(indexChild + 1),
           icon: <div className="h-6 w-6">{icon}</div>,
-          label: <Text label={subLabel} />,
+          label: <Text label={subLabel} className="text-gray-400" />,
         };
       }) as MenuProps["items"],
     };
@@ -129,7 +228,7 @@ const Layout = ({ ...props }: LayoutInterface) => {
 
     return {
       key: String(index + 1),
-      label: <Text label={label} />,
+      label: <Text label={label} className="text-gray-400" />,
     };
   });
 
@@ -166,6 +265,7 @@ const Layout = ({ ...props }: LayoutInterface) => {
               itemSelectedColor: "#185288",
               itemSelectedBg: "rgba(10, 173, 224, 0.15)",
               darkItemBg: "#16161E",
+              darkItemSelectedBg: "#16161EA6",
             },
           },
         }}
@@ -173,10 +273,11 @@ const Layout = ({ ...props }: LayoutInterface) => {
         <LayoutAntd>
           <Header
             style={{
-              padding: 24,
+              padding: "32px 24px",
               background: "#16161E",
               display: "flex",
               alignItems: "center",
+              borderBottom: "2px solid #22222A",
             }}
           >
             <Menu
@@ -187,17 +288,29 @@ const Layout = ({ ...props }: LayoutInterface) => {
               items={itemsNav}
               style={{ flex: 1, minWidth: 0 }}
             />
+
+            <Input
+              name="search"
+              type="text"
+              required
+              placeholder="Search in the list"
+              prefixIcon={
+                <ImageNext
+                  src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/mHJk6n4/Screenshot-2024-03-03-at-23-50-59.png`}
+                  width={32}
+                  height={32}
+                  priority
+                  alt="icon"
+                  className="h-auto w-auto"
+                />
+              }
+              classNameInput="rounded-xl bg-[#22222A] border-0 p-3 ps-12 text-white shadow-sm ring-1 ring-inset ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-blue sm:text-sm"
+            />
           </Header>
 
           <Content>
             <LayoutAntd>
-              <Sider
-                theme="dark"
-                className="scrollbar"
-                style={{
-                  height: "100vh",
-                }}
-              >
+              <Sider breakpoint="lg" theme="dark" className="scrollbar">
                 <Menu
                   onClick={onClickMenu}
                   selectedKeys={[currentMenu ?? ""]}

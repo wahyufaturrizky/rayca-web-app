@@ -2,7 +2,7 @@ import { ChangeEventHandler, FocusEventHandler, ReactNode } from "react";
 
 export interface InputInterface {
   label?: string;
-  classNameInput: string;
+  classNameInput?: string;
   classNameLabel?: string;
   name: string;
   type: string;
@@ -11,7 +11,7 @@ export interface InputInterface {
   required?: boolean;
   error?: any;
   prefixIcon?: ReactNode;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   onBlur?: FocusEventHandler<HTMLInputElement>;
-  value: string | number | readonly string[] | undefined;
+  value?: string | number | readonly string[] | undefined;
 }
