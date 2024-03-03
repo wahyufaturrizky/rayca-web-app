@@ -166,7 +166,7 @@ export default function Home() {
           },
         }}
       >
-        <div className="flex items-center p-6 lg:justify-between gap-10 overflow-x-scroll flex-nowrap">
+        <div className="flex items-center p-6 lg:justify-between gap-10 overflow-x-scroll flex-nowrap border-2 border-[#22222A]">
           <Input
             name="search"
             type="text"
@@ -210,15 +210,18 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <Table
-          columns={columns}
-          dataSource={dataTable}
-          scroll={{ x: 1400 }}
-          pagination={tableParams.pagination}
-          onChange={handleTableChange}
-          rowSelection={rowSelection}
-          rowKey={(record) => record.id}
-        />
+
+        <div className="border-2 border-[#22222A] p-6">
+          <Table
+            columns={columns}
+            dataSource={dataTable}
+            scroll={{ x: 1400 }}
+            pagination={tableParams.pagination}
+            onChange={handleTableChange}
+            rowSelection={rowSelection}
+            rowKey={(record) => record.id}
+          />
+        </div>
       </ConfigProvider>
     </div>
   );

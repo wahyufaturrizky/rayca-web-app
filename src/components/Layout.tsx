@@ -22,7 +22,7 @@ const Layout = ({ ...props }: LayoutInterface) => {
   const [currentMenu, setCurrentMenu] = useState<string | null>(null);
   const [currentMenuNav, setCurrentMenuNav] = useState<string | null>(null);
 
-  const [openKeys, setOpenKeys] = useState<string[] | undefined>(["sub1"]);
+  const [openKeys, setOpenKeys] = useState<string[] | undefined>(["1"]);
 
   const itemsMenu: MenuProps["items"] = [
     {
@@ -36,8 +36,8 @@ const Layout = ({ ...props }: LayoutInterface) => {
           className="h-auto w-auto"
         />
       ),
-      label: "Approvals",
-      key: "approvals",
+      label: "All Downloads",
+      key: "all Downloads",
       children: [
         {
           icon: (
@@ -265,6 +265,8 @@ const Layout = ({ ...props }: LayoutInterface) => {
               itemSelectedColor: "#185288",
               itemSelectedBg: "rgba(10, 173, 224, 0.15)",
               darkItemBg: "#16161E",
+              darkSubMenuItemBg: "#16161E",
+              subMenuItemBg: "#16161E",
               darkItemSelectedBg: "#16161EA6",
             },
           },
@@ -310,16 +312,18 @@ const Layout = ({ ...props }: LayoutInterface) => {
 
           <Content>
             <LayoutAntd>
-              <Sider breakpoint="lg" theme="dark" className="scrollbar">
-                <Menu
-                  onClick={onClickMenu}
-                  selectedKeys={[currentMenu ?? ""]}
-                  onOpenChange={onOpenChange}
-                  openKeys={openKeys}
-                  theme="dark"
-                  mode="inline"
-                  items={itemsMenu}
-                />
+              <Sider width={280} breakpoint="lg" theme="dark" className="scrollbar">
+                <div className="border-2 border-[#22222A] m-4 p-2 rounded-xl">
+                  <Menu
+                    onClick={onClickMenu}
+                    selectedKeys={[currentMenu ?? ""]}
+                    onOpenChange={onOpenChange}
+                    openKeys={openKeys}
+                    theme="dark"
+                    mode="inline"
+                    items={itemsMenu}
+                  />
+                </div>
               </Sider>
               <Content>{props.children}</Content>
             </LayoutAntd>
