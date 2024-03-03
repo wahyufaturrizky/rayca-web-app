@@ -19,6 +19,7 @@ const Input = ({
   placeholder,
   error,
   prefixIcon,
+  suffixIcon,
 }: InputInterface) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -55,19 +56,13 @@ const Input = ({
         <Text className="text-[#EB5757] font-roboto mt-2 font-bold text-sm" label={error.message} />
       )}
 
-      {type === "password" && (
+      {suffixIcon && (
         <div
-          onClick={() => setShowPassword(!showPassword)}
           className={`absolute ${
-            error ? "bottom-8" : "bottom-1.5"
-          } right-0 flex items-center mr-3 cursor-pointer`}
+            error ? "bottom-8" : "bottom-0"
+          } right-0 flex items-center mr-3 cursor-pointer inset-y-0`}
         >
-          <ImageNext
-            alt="icon"
-            src={showPassword ? "/visibility.svg" : "/visibility_off.svg"}
-            width={24}
-            height={24}
-          />
+          {suffixIcon}
         </div>
       )}
     </div>

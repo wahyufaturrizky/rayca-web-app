@@ -11,6 +11,7 @@ export interface InputInterface {
   required?: boolean;
   error?: any;
   prefixIcon?: ReactNode;
+  suffixIcon?: ReactNode;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   value?: string | number | readonly string[] | undefined;

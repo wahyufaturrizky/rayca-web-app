@@ -182,6 +182,16 @@ export default function Home() {
                 className="h-auto w-auto"
               />
             }
+            suffixIcon={
+              <ImageNext
+                src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/MMmPjtw/Screenshot-2024-03-04-at-02-21-35.png`}
+                width={32}
+                height={32}
+                priority
+                alt="icon"
+                className="h-auto w-auto"
+              />
+            }
             classNameInput="rounded-xl bg-[#22222A] border-0 p-3 ps-12 text-white shadow-sm ring-1 ring-inset ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-blue sm:text-sm"
           />
 
