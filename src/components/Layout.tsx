@@ -3,13 +3,13 @@ import { LayoutInterface, MenuItem } from "@/interface/Layout";
 
 import type { MenuProps } from "antd";
 import { ConfigProvider, Grid, Layout as LayoutAntd, Menu } from "antd";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import ImageNext from "./Image";
 import Text from "./Text";
 
 // Author, Software Architect, Software Engineer, Software Developer : https://www.linkedin.com/in/wahyu-fatur-rizky
 
-const { Header, Content, Footer, Sider } = LayoutAntd;
+const { Header, Content, Sider } = LayoutAntd;
 
 const { useBreakpoint } = Grid;
 
@@ -19,11 +19,11 @@ const Layout = ({ ...props }: LayoutInterface) => {
   const { lg, xl, xxl, xs } = screens;
 
   const [currentMenu, setCurrentMenu] = useState<string | null>(null);
+  const [currentMenuNav, setCurrentMenuNav] = useState<string | null>(null);
+
   const [openKeys, setOpenKeys] = useState<string[] | undefined>(["sub1"]);
 
-  const ref = useRef<any>(null);
-
-  const items: MenuProps["items"] = [
+  const itemsMenu: MenuProps["items"] = [
     {
       icon: (
         <ImageNext
@@ -54,22 +54,82 @@ const Layout = ({ ...props }: LayoutInterface) => {
         },
       ],
     },
+    {
+      icon: (
+        <ImageNext
+          src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/2sHnk28/Screenshot-2024-03-03-at-20-13-00.png`}
+          width={32}
+          height={32}
+          priority
+          alt="icon"
+          className="h-auto w-auto"
+        />
+      ),
+      label: "Unfinished",
+      key: "unfinished",
+      children: [],
+    },
+    {
+      icon: (
+        <ImageNext
+          src={`${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}/2sHnk28/Screenshot-2024-03-03-at-20-13-00.png`}
+          width={32}
+          height={32}
+          priority
+          alt="icon"
+          className="h-auto w-auto"
+        />
+      ),
+      label: "Finished",
+      key: "finished",
+      children: [],
+    },
   ].map((item, index) => {
     const { icon, label, children } = item;
 
     return {
       key: String(index + 1),
       icon: <div className="h-6 w-6">{icon}</div>,
-      label: <Text label={label} className="font-bold" />,
+      label: <Text label={label} />,
       children: children?.map((child, indexChild) => {
         const { icon, label: subLabel } = child;
 
         return {
           key: String(index + 1) + "-" + String(indexChild + 1),
           icon: <div className="h-6 w-6">{icon}</div>,
-          label: subLabel,
+          label: <Text label={subLabel} />,
         };
       }) as MenuProps["items"],
+    };
+  });
+
+  const itemsNav: MenuProps["items"] = [
+    {
+      label: "Tasks",
+      key: "tasks",
+    },
+    {
+      label: "File",
+      key: "file",
+    },
+    {
+      label: "Downloads",
+      key: "downloads",
+    },
+    {
+      label: "View",
+      key: "view",
+    },
+    {
+      label: "Help",
+      key: "help",
+    },
+  ].map((item, index) => {
+    const { label } = item;
+
+    return {
+      key: String(index + 1),
+      label: <Text label={label} />,
     };
   });
 
@@ -77,11 +137,15 @@ const Layout = ({ ...props }: LayoutInterface) => {
     setCurrentMenu(e.key);
   };
 
+  const onClickMenuNav: MenuProps["onClick"] = (e) => {
+    setCurrentMenuNav(e.key);
+  };
+
   const onOpenChange: MenuProps["onOpenChange"] = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys?.indexOf(key) === -1);
     if (
       latestOpenKey &&
-      items.map((itemSubMenu: MenuItem) => itemSubMenu?.key).indexOf(latestOpenKey) === -1
+      itemsMenu.map((itemSubMenu: MenuItem) => itemSubMenu?.key).indexOf(latestOpenKey) === -1
     ) {
       setOpenKeys(keys);
     } else {
@@ -95,63 +159,58 @@ const Layout = ({ ...props }: LayoutInterface) => {
       <ConfigProvider
         theme={{
           components: {
+            Layout: {
+              siderBg: "#16161E",
+            },
             Menu: {
               itemSelectedColor: "#185288",
               itemSelectedBg: "rgba(10, 173, 224, 0.15)",
-              itemBorderRadius: 0,
-              itemMarginInline: 0,
-              itemMarginBlock: 16,
+              darkItemBg: "#16161E",
             },
           },
         }}
       >
-        <LayoutAntd hasSider>
-          <Sider
-            trigger={!(lg ?? xl ?? xxl) && null}
-            theme="light"
-            width={220}
-            className="scrollbar"
+        <LayoutAntd>
+          <Header
             style={{
-              overflow: "auto",
-              height: "100vh",
-              position: "fixed",
-              left: 0,
-              top: 0,
-              bottom: 0,
+              padding: 24,
+              background: "#16161E",
+              display: "flex",
+              alignItems: "center",
             }}
           >
             <Menu
-              onClick={onClickMenu}
-              selectedKeys={[currentMenu ?? ""]}
-              onOpenChange={onOpenChange}
-              openKeys={openKeys}
-              theme="light"
-              mode="inline"
-              items={items}
+              onClick={onClickMenuNav}
+              selectedKeys={[currentMenuNav ?? ""]}
+              theme="dark"
+              mode="horizontal"
+              items={itemsNav}
+              style={{ flex: 1, minWidth: 0 }}
             />
-          </Sider>
-          <LayoutAntd style={{ marginLeft: 220 }}>
-            <Header
-              className="drop-shadow-xl"
-              style={{
-                padding: xxl || xl || lg ? 24 : 8,
-                position: "sticky",
-                background: "white",
-                top: 0,
-                zIndex: 1,
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <div className="flex items-center gap-4">
-                <Text className="text-secondary-blue font-bold" label="adasd" />
-              </div>
-            </Header>
-            <Content style={{ overflow: "initial" }}>{props.children}</Content>
-            <Footer style={{ textAlign: "center" }}></Footer>
-          </LayoutAntd>
+          </Header>
+
+          <Content>
+            <LayoutAntd>
+              <Sider
+                theme="dark"
+                className="scrollbar"
+                style={{
+                  height: "100vh",
+                }}
+              >
+                <Menu
+                  onClick={onClickMenu}
+                  selectedKeys={[currentMenu ?? ""]}
+                  onOpenChange={onOpenChange}
+                  openKeys={openKeys}
+                  theme="dark"
+                  mode="inline"
+                  items={itemsMenu}
+                />
+              </Sider>
+              <Content>{props.children}</Content>
+            </LayoutAntd>
+          </Content>
         </LayoutAntd>
       </ConfigProvider>
     </div>

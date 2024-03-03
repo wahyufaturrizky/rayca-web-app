@@ -1,5 +1,5 @@
 export interface TextInterface {
   label: string | React.JSX.Element;
-  className: string;
+  className?: string;
   onClick?: () => void;
 }
