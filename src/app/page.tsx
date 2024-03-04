@@ -97,8 +97,8 @@ export default function Home() {
             />
 
             <div>
-              <Text label={text} className="text-base font-normal text-gray-400" />
-              <Text label={text} className="text-xs font-normal text-gray-400" />
+              <Text label={text} className="text-base font-thin text-gray-400" />
+              <Text label={text} className="text-xs font-thin text-gray-400" />
             </div>
           </div>
         );
@@ -110,7 +110,7 @@ export default function Home() {
       sorter: (a, b) => a.size - b.size,
       key: "size",
       render: (text: string) => {
-        return <Text label={`${text} KB`} className="text-base font-normal text-gray-400" />;
+        return <Text label={`${text} KB`} className="text-base font-thin text-gray-400" />;
       },
     },
     {
@@ -119,7 +119,7 @@ export default function Home() {
       sorter: (a, b) => a.status.length - b.status.length,
       key: "status",
       render: (text: string) => {
-        return <Text label={text} className="text-base font-normal text-gray-400" />;
+        return <Text label={text} className="text-base font-thin text-gray-400" />;
       },
     },
     {
@@ -128,7 +128,7 @@ export default function Home() {
       sorter: (a, b) => a.timeLeft - b.timeLeft,
       key: "timeLeft",
       render: (text: string) => {
-        return <Text label={`${text} Sec`} className="text-base font-normal text-gray-400" />;
+        return <Text label={`${text} Sec`} className="text-base font-thin text-gray-400" />;
       },
     },
     {
@@ -137,7 +137,7 @@ export default function Home() {
       sorter: (a, b) => a.lastModification.length - b.lastModification.length,
       key: "lastModification",
       render: (text: string) => {
-        return <Text label={text} className="text-base font-normal text-gray-400" />;
+        return <Text label={text} className="text-base font-thin text-gray-400" />;
       },
     },
   ];
@@ -150,11 +150,13 @@ export default function Home() {
             colorPrimary: "#16161EA6",
             colorText: "rgb(156 163 175)",
             colorBgContainer: "#16161E",
+            fontWeightStrong: 300,
           },
           components: {
             Table: {
               rowHoverBg: "black",
               headerSplitColor: "#16161E",
+              borderColor: "#16161E",
             },
             Pagination: {
               itemActiveBg: "white",
