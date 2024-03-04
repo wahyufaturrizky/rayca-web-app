@@ -154,6 +154,7 @@ export default function Home() {
           components: {
             Table: {
               rowHoverBg: "black",
+              headerSplitColor: "#16161E",
             },
             Pagination: {
               itemActiveBg: "white",
