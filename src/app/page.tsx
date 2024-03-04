@@ -207,7 +207,10 @@ export default function Home() {
                 className="h-[32px] w-[32px]"
               />
 
-              <Text label={item.label} className="text-white text-gray-400 text-center" />
+              <Text
+                label={item.label}
+                className="text-white text-gray-400 text-center sm:text-base text-xs"
+              />
             </div>
           ))}
         </div>

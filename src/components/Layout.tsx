@@ -275,7 +275,6 @@ const Layout = ({ ...props }: LayoutInterface) => {
         <LayoutAntd>
           <Header
             style={{
-              padding: "32px 24px",
               background: "#16161E",
               display: "flex",
               alignItems: "center",
@@ -306,7 +305,7 @@ const Layout = ({ ...props }: LayoutInterface) => {
                   className="h-auto w-auto"
                 />
               }
-              classNameInput="rounded-xl bg-[#22222A] border-0 p-3 ps-12 text-white shadow-sm ring-1 ring-inset ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-blue sm:text-sm"
+              classNameInput="rounded-xl bg-[#22222A] border-0 sm:p-3 p-0 sm:ps-12 ps-12 text-white shadow-sm ring-1 ring-inset ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-blue sm:text-sm"
             />
           </Header>
 
